@@ -9,6 +9,7 @@ import Quest from './pages/Quest';
 import Intermediate from './pages/intermediate';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import QuestDetail from './pages/QuestDetail';
+import Music from './pages/Music';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route Component={Player} path="/" exact />
           <Route Component={Intermediate} path="/authenticating" exact />
           <Route Component={QuestDetail} path="/questdetail" exact />
+          <Route Component={Music} path="/music" exact />
         </Routes>
       </Router>
     </>
