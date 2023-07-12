@@ -1,13 +1,28 @@
 import { useState, useEffect } from 'react';
-import useSound from "use-sound";
+import useSound from 'use-sound';
+import axios from 'axios';
 
-import song from "https://www.youtube.com/watch?v=jfKfPfyJRdk&ab_channel=LofiGirl";
 import BtnMusic from '../components/BtnMusic';
+
+const musicUrl = {
+  method: 'GET',
+  url: 'https://www.youtube.com/watch?v=jfKfPfyJRdk&ab_channel=LofiGirl',
+};
 
 const Music = () => {
   const [musicStatus, setMusicStatus] = useState('play');
   const [isPlaying, setIsPlaying] = useState(false);
-  const [play, {pause}] = useSound(song);
+  const [song, setSong] = useState();
+  const [play, { pause }] = useSound(song);
+
+  useEffect(() => {
+    try {
+      const song = axios.request(musicUrl);
+      setSong(song);
+    } catch (error) {
+      throw error;
+    }
+  }, []);
 
   useEffect(() => {
     play();
@@ -19,8 +34,7 @@ const Music = () => {
       setMusicStatus('play');
       pause();
       setIsPlaying(false);
-    }
-    else {
+    } else {
       setMusicStatus('stop');
       play();
       setIsPlaying(true);
