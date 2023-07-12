@@ -31,6 +31,7 @@
     "react-router-dom": "^6.11.1",
     "react-scripts": "^5.0.1",
     "react-zlib-js": "^1.0.5",
+    "use-sound": "^4.0.1",
     "web-vitals": "^2.1.4",
     "webpack": "^5.83.1",
     "zlib": "^1.0.5"

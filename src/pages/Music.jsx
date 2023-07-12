@@ -1,11 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import useSound from "use-sound";
+
+import song from "https://www.youtube.com/watch?v=jfKfPfyJRdk&ab_channel=LofiGirl";
+import BtnMusic from '../components/BtnMusic';
 
 const Music = () => {
   const [musicStatus, setMusicStatus] = useState('play');
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [play, {pause}] = useSound(song);
 
-  const changeStatus = e => {
-    if(e.target.value === 'play') setMusicStatus('stop');
-    else setMusicStatus('play');
+  useEffect(() => {
+    play();
+    setIsPlaying(true);
+  }, [play]);
+
+  const changeStatus = () => {
+    if (isPlaying) {
+      setMusicStatus('play');
+      pause();
+      setIsPlaying(false);
+    }
+    else {
+      setMusicStatus('stop');
+      play();
+      setIsPlaying(true);
+    }
+  };
+
+  const handleSongEnd = () => {
+    setMusicStatus('play');
+    play();
+    setIsPlaying(true);
   };
 
   return (
@@ -13,16 +38,11 @@ const Music = () => {
       <div className="container flex justify-end">
         <div className="mt-5">
           <div>
-            <input
-              className="w-20 h-20 rounded-full bg-gray-100"
-              type='button'
-              style={{ background: 'url(./music_back.png)', backgroundSize: 'cover' }}
-              onClick={e => changeStatus(e)}
-              value={musicStatus}
-            />
+            <BtnMusic musicStatus={musicStatus} changeStatus={changeStatus} />
           </div>
         </div>
       </div>
+      <audio src={song} onEnded={handleSongEnd} loop={true} />
     </div>
   );
 };
